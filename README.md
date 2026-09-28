@@ -1,12 +1,12 @@
 # Raspberry Space Lab
 
-Laboratorio práctico con Raspberry Pi orientado a SDR, ADS-B, Linux, redes y observabilidad.
+Estación experimental con Raspberry Pi orientada a SDR, ADS-B, señales satelitales, telemetría y observabilidad.
 
 ## Objetivo
 
-Construir una pequeña estación de monitoreo capaz de recibir y analizar señales de radio.
+Construir una estación de monitoreo capaz de recibir, procesar y visualizar señales de radio.
 
-La primera etapa estará enfocada en tráfico aéreo ADS-B en 1090 MHz. Más adelante el laboratorio podrá ampliarse hacia recepción de señales satelitales y otros experimentos relacionados con radiofrecuencia.
+La primera etapa estará enfocada en tráfico aéreo ADS-B en 1090 MHz. Posteriormente el proyecto se ampliará hacia recepción de señales satelitales, recopilación de telemetría y creación de dashboards para monitorear tanto las señales recibidas como el estado de la infraestructura.
 
 ## Tecnologías
 
@@ -15,8 +15,10 @@ La primera etapa estará enfocada en tráfico aéreo ADS-B en 1090 MHz. Más ade
 - SSH
 - RTL-SDR
 - ADS-B
-- Docker
 - Python
+- Docker
+- Telemetría
+- Dashboards
 - Observabilidad
 
 ## Roadmap
@@ -26,8 +28,9 @@ La primera etapa estará enfocada en tráfico aéreo ADS-B en 1090 MHz. Más ade
 - Integración RTL-SDR
 - Recepción ADS-B
 - Visualización de tráfico aéreo
-- Métricas y monitoreo
-- Docker
+- Recolección de métricas y telemetría
+- Dashboards de monitoreo
+- Docker y automatización
 - Exploración de señales satelitales
 
 ## Estado
@@ -38,6 +41,6 @@ La Raspberry Pi ya se encuentra preparada para administración remota y cuenta c
 
 ## Documentación
 
-La documentación técnica del laboratorio se encuentra en:
+La documentación técnica y las pruebas realizadas se encuentran en:
 
 `docs/`
