@@ -23,15 +23,16 @@ La primera etapa estará enfocada en tráfico aéreo ADS-B en 1090 MHz. Posterio
 
 ## Roadmap
 
-- Preparación de la Raspberry Pi
-- Almacenamiento y acceso remoto
+- Preparación de la Raspberry Pi ✅
+- Almacenamiento y acceso remoto ✅
+- Análisis de señales y datasets públicos
+- Visualización de señales y espectrogramas
 - Integración RTL-SDR
-- Recepción ADS-B
+- Recepción ADS-B en 1090 MHz
 - Visualización de tráfico aéreo
-- Recolección de métricas y telemetría
-- Dashboards de monitoreo
-- Docker y automatización
-- Exploración de señales satelitales
+- Recepción de señales satelitales
+- Telemetría, métricas y dashboards
+- Automatización y observabilidad
 
 ## Estado
 
