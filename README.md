@@ -1,105 +1,192 @@
 # Raspberry Space Lab
 
-Estación experimental con Raspberry Pi orientada a datos espaciales, SDR, ADS-B, señales satelitales, telemetría y observabilidad.
+Laboratorio experimental con Raspberry Pi orientado a la adquisición, procesamiento y visualización de datos espaciales y señales de radio.
+
+El proyecto combina Linux, Python, fuentes de datos públicas y, en etapas posteriores, hardware SDR para construir progresivamente una pequeña estación de monitoreo.
 
 ## Objetivo
 
-Construir de forma progresiva una estación capaz de obtener, procesar, almacenar y visualizar datos espaciales y señales de radio.
+Desarrollar una plataforma capaz de obtener, procesar, almacenar y visualizar información relacionada con observación espacial y radiofrecuencia.
 
-Mientras se prepara la integración de hardware RTL-SDR, el proyecto utiliza APIs, datasets y observaciones públicas reales para comenzar a trabajar con información satelital.
+Mientras se incorpora hardware RTL-SDR, el laboratorio utiliza datos reales provenientes de fuentes públicas como NASA y SatNOGS para trabajar con APIs, imágenes satelitales y señales previamente capturadas.
 
-Actualmente se integró NASA DSCOVR / EPIC mediante Python y se incorporó una primera observación de NOAA 19 obtenida desde SatNOGS.
+## Estado actual
 
-Posteriormente se añadirá recepción directa mediante RTL-SDR, comenzando con tráfico aéreo ADS-B en 1090 MHz y avanzando hacia señales satelitales, telemetría, automatización y observabilidad.
+Actualmente el proyecto cuenta con:
 
-## Tecnologías
+- Raspberry Pi OS Lite configurado.
+- Administración remota mediante SSH.
+- Almacenamiento USB adicional.
+- Aplicación inicial en Python para consultar NASA DSCOVR / EPIC.
+- Descarga local de imágenes de la Tierra.
+- Dataset real de una observación NOAA 19.
+- Visualización de waterfall y datos demodulados.
+- Separación entre código, documentación y datos de trabajo.
+
+## NASA DSCOVR / EPIC
+
+Se desarrolló `src/space_viewer.py`, una primera herramienta en Python que consulta la API pública de NASA DSCOVR / EPIC.
+
+El programa obtiene:
+
+- nombre de la última imagen disponible;
+- fecha de la observación;
+- cantidad de imágenes disponibles;
+- imagen correspondiente a la observación seleccionada.
+
+Flujo actual:
+
+```text
+NASA DSCOVR / EPIC
+        │
+        ▼
+      API REST
+        │
+        ▼
+       JSON
+        │
+        ▼
+      Python
+        │
+        ▼
+   Imagen local
+```
+
+Las imágenes descargadas se almacenan localmente en:
+
+```text
+data/epic/
+```
+
+Esta carpeta está excluida mediante `.gitignore` para evitar acumular imágenes generadas durante las consultas.
+
+## Primera observación satelital
+
+El repositorio también incluye una observación pública de **NOAA 19** obtenida desde SatNOGS.
+
+Datos principales:
+
+- Satélite: NOAA 19
+- Frecuencia: 137.100 MHz
+- Modo: APT
+- Fuente: SatNOGS
+- Observación: 9505836
+
+Archivos conservados:
+
+```text
+data/raw/noaa19-9505836/
+├── demoddata.png
+└── waterfall.png
+```
+
+El waterfall permite observar la distribución de energía de la señal a través de la frecuencia y el tiempo.
+
+Los datos demodulados permiten comenzar a estudiar el procesamiento de una transmisión satelital real antes de disponer de un receptor propio.
+
+## Arquitectura
+
+```text
+Fuentes públicas
+      │
+      ├── NASA DSCOVR / EPIC
+      │
+      └── SatNOGS / NOAA 19
+      │
+      ▼
+     Python
+      │
+      ├── JSON
+      ├── Imágenes
+      └── Datos de señales
+      │
+      ▼
+Raspberry Space Lab
+
+
+Próxima etapa de hardware:
+
+RTL-SDR
+   │
+   ▼
+Raspberry Pi
+   │
+   ├── ADS-B 1090 MHz
+   └── Señales satelitales
+```
+
+## Estructura del repositorio
+
+```text
+raspberry-space-lab/
+├── data/
+│   └── raw/
+│       └── noaa19-9505836/
+│           ├── demoddata.png
+│           └── waterfall.png
+│
+├── docs/
+│   └── setup.md
+│
+├── src/
+│   └── space_viewer.py
+│
+├── .gitignore
+└── README.md
+```
+
+`data/epic/` se crea localmente durante la ejecución y no se versiona.
+
+## Tecnologías utilizadas
 
 - Raspberry Pi
-- Linux
-- SSH
+- Raspberry Pi OS / Linux
 - Python
+- SSH
+- Git / GitHub
 - APIs REST
 - JSON
 - NASA DSCOVR / EPIC
 - SatNOGS
+
+### Próximas tecnologías
+
 - RTL-SDR
-- ADS-B
-- Docker
+- ADS-B 1090 MHz
+- Recepción de señales satelitales
 - Telemetría
 - Dashboards
+- Automatización
 - Observabilidad
 
-## Arquitectura actual
+## Roadmap
 
-```text
-NASA DSCOVR / EPIC ──┐
-                     │
-SatNOGS / NOAA 19 ───┼──> Raspberry Space Lab
-                     │          │
-                     │          ├── Python
-                     │          ├── JSON
-                     │          ├── Imágenes
-                     │          └── Análisis de señales
-                     │
-                     └──> Fuentes públicas reales
+- [x] Preparación de la Raspberry Pi
+- [x] Configuración de almacenamiento externo
+- [x] Administración remota mediante SSH
+- [x] Consulta de datos espaciales mediante API
+- [x] Integración inicial con NASA DSCOVR / EPIC
+- [x] Descarga y almacenamiento local de imágenes
+- [x] Incorporación de observación NOAA 19 / SatNOGS
+- [x] Primera visualización de waterfall
+- [ ] Ampliar análisis de imágenes y datasets espaciales
+- [ ] Incorporar nuevas fuentes de observación
+- [ ] Integrar RTL-SDR
+- [ ] Recibir ADS-B en 1090 MHz
+- [ ] Visualizar tráfico aéreo
+- [ ] Recibir señales satelitales directamente
+- [ ] Incorporar telemetría y métricas
+- [ ] Crear dashboards
+- [ ] Automatizar tareas de adquisición y monitoreo
 
-Próximamente:
+## Documentación
 
-RTL-SDR
-   │
-   └──> Raspberry Pi
-           │
-           ├── ADS-B
-           └── Señales satelitales
+La preparación inicial de la Raspberry Pi, red, SSH, almacenamiento y pruebas realizadas se encuentra documentada en:
 
-Estado
-Proyecto en desarrollo.
-La Raspberry Pi se encuentra preparada para administración remota mediante SSH y cuenta con almacenamiento USB adicional para futuras capturas, datasets y servicios.
-Actualmente se desarrolló una aplicación inicial en Python capaz de consultar la API de NASA DSCOVR / EPIC, obtener información de las imágenes disponibles y descargar imágenes bajo demanda.
-También se incorporó una observación pública de NOAA 19 para comenzar a trabajar con señales satelitales reales antes de disponer del hardware RTL-SDR.
-La muestra incluye:
-- Waterfall de la señal.
-- Datos demodulados.
-- Transmisión APT en 137.100 MHz.
-- Observación obtenida desde la red SatNOGS.
-Las imágenes descargadas desde NASA se almacenan localmente en data/epic/ y están excluidas del repositorio para evitar acumular archivos innecesarios.
-Estructura
-raspberry-space-lab/
-├── src/
-│   └── space_viewer.py
-├── data/
-│   ├── epic/
-│   └── raw/
-│       └── noaa19-9505836/
-│           ├── waterfall.png
-│           └── demoddata.png
-├── docs/
-│   └── setup.md
-├── images/
-├── configs/
-├── README.md
-└── .gitignore
+[`docs/setup.md`](docs/setup.md)
 
-Roadmap
-- Preparación de la Raspberry Pi ✅
-- Almacenamiento externo ✅
-- Acceso remoto mediante SSH ✅
-- Consulta de datos espaciales mediante APIs ✅
-- Integración inicial con NASA DSCOVR / EPIC ✅
-- Primera observación NOAA 19 / SatNOGS ✅
-- Visualización de waterfalls ✅
-- Análisis de señales y datasets públicos 🚧
-- Visualización y organización de imágenes espaciales
-- Integración RTL-SDR
-- Recepción ADS-B en 1090 MHz
-- Visualización de tráfico aéreo
-- Recepción de señales satelitales
-- Telemetría, métricas y dashboards
-- Automatización y observabilidad
-Próxima etapa
-Continuar desarrollando la aplicación de consulta espacial para organizar y visualizar datos obtenidos desde fuentes públicas.
-Se evaluará la incorporación de nuevas fuentes de información, como imágenes solares, observaciones satelitales y otros datasets espaciales.
-La recepción directa de señales se incorporará cuando esté disponible el hardware RTL-SDR.
-Documentación
-La configuración de la Raspberry Pi, almacenamiento, acceso remoto y las pruebas técnicas realizadas se encuentran en:
-docs/
+## Próxima etapa
+
+Continuar desarrollando la capa de adquisición de datos espaciales utilizando fuentes públicas.
+
+El siguiente objetivo es incorporar nuevas observaciones e imágenes y mejorar su organización y visualización antes de integrar el receptor RTL-SDR.
