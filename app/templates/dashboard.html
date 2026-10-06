@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Raspberry Space Lab</title>
+
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">🍓</div>
+
+            <div>
+                <h1>Raspberry Space Lab</h1>
+                <p>Space Data Monitor</p>
+            </div>
+        </div>
+
+        <nav>
+            <a class="active" href="#">🏠 Dashboard</a>
+            <a href="#">🌍 Earth</a>
+            <a href="#">☀️ Sun</a>
+            <a href="#">🪐 Planets</a>
+            <a href="#">🛰 Satellites</a>
+            <a href="#">📡 Observations</a>
+            <a href="#">📊 Statistics</a>
+            <a href="#">⚙ Settings</a>
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+        <!-- STATUS BAR -->
+        <header class="topbar">
+
+            <div class="status">
+                <span class="dot online"></span>
+
+                <div>
+                    <strong>API MODE</strong>
+                    <small>Public space data</small>
+                </div>
+            </div>
+
+
+            <div class="status">
+                <span class="dot online"></span>
+
+                <div>
+                    <strong>1 SOURCE ONLINE</strong>
+                    <small>NASA EPIC</small>
+                </div>
+            </div>
+
+
+            <div class="status">
+                <span class="dot pending"></span>
+
+                <div>
+                    <strong>RTL-SDR PENDING</strong>
+                    <small>Waiting for hardware</small>
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- SPACE SOURCES -->
+        <section class="hero-grid">
+
+            <!-- EARTH -->
+            <article class="space-card">
+
+                <div class="card-title">
+                    <h2>🌍 Earth — DSCOVR / EPIC</h2>
+                    <span class="badge">Online</span>
+                </div>
+
+                <div class="image-placeholder">
+                    <img
+                        src="{{ earth.image_url }}"
+                        alt="Última imagen disponible de la Tierra capturada por NASA DSCOVR EPIC"
+                    >
+                </div>
+
+                <div class="card-info">
+
+                    <p>Última observación</p>
+                    <strong>{{ earth.date }} UTC</strong>
+
+                    <p>Fuente</p>
+                    <strong>{{ earth.source }}</strong>
+
+                    <p>Imagen</p>
+                    <strong>{{ earth.name }}</strong>
+
+                </div>
+
+                <div class="actions">
+
+                    <button
+                        onclick="window.open('{{ earth.image_url }}', '_blank')"
+                    >
+                        Ver imagen
+                    </button>
+
+                    <button
+                        class="secondary"
+                        disabled
+                        title="Disponible en una próxima versión"
+                    >
+                        Guardar
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- SUN -->
+            <article class="space-card">
+
+                <div class="card-title">
+                    <h2>☀️ Sun — SDO</h2>
+                    <span class="badge pending-badge">
+                        Próximamente
+                    </span>
+                </div>
+
+                <div class="image-placeholder sun">
+                    ☀️
+                </div>
+
+                <div class="card-info">
+
+                    <p>Última observación</p>
+                    <strong>Sin conectar</strong>
+
+                    <p>Fuente</p>
+                    <strong>Helioviewer / NASA SDO</strong>
+
+                </div>
+
+                <div class="actions">
+
+                    <button disabled>
+                        Ver imagen
+                    </button>
+
+                    <button
+                        class="secondary"
+                        disabled
+                    >
+                        Guardar
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- PLANETS -->
+            <article class="space-card">
+
+                <div class="card-title">
+                    <h2>🪐 Planet Archive</h2>
+                    <span class="badge pending-badge">
+                        Próximamente
+                    </span>
+                </div>
+
+                <div class="image-placeholder planet">
+                    🪐
+                </div>
+
+                <div class="card-info">
+
+                    <p>Objeto</p>
+                    <strong>Jupiter</strong>
+
+                    <p>Fuente</p>
+                    <strong>NASA Image Library</strong>
+
+                </div>
+
+                <div class="actions">
+
+                    <button disabled>
+                        Ver imagen
+                    </button>
+
+                    <button
+                        class="secondary"
+                        disabled
+                    >
+                        Guardar
+                    </button>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- STATISTICS -->
+        <section class="stats-grid">
+
+            <article class="stat-card">
+
+                <span>🔄</span>
+
+                <div>
+                    <p>API Queries</p>
+                    <strong>1</strong>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <span>🖼</span>
+
+                <div>
+                    <p>Images Saved</p>
+                    <strong>0</strong>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <span>🔗</span>
+
+                <div>
+                    <p>Active Sources</p>
+                    <strong>1</strong>
+                </div>
+
+            </article>
+
+
+            <article class="stat-card">
+
+                <span>🕐</span>
+
+                <div>
+                    <p>Latest Observation</p>
+                    <strong>{{ earth.date }}</strong>
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- LOWER PANELS -->
+        <section class="bottom-grid">
+
+            <!-- SOURCE HEALTH -->
+            <article class="panel">
+
+                <h3>Source Health</h3>
+
+                <div class="source-row">
+                    <span>🌍 NASA EPIC</span>
+                    <span class="online-text">
+                        ● Online
+                    </span>
+                </div>
+
+                <div class="source-row">
+                    <span>☀️ Helioviewer</span>
+                    <span class="pending-text">
+                        ● Pending
+                    </span>
+                </div>
+
+                <div class="source-row">
+                    <span>🛰 SatNOGS</span>
+                    <span class="pending-text">
+                        ● Dataset
+                    </span>
+                </div>
+
+            </article>
+
+
+            <!-- RECENT OBSERVATIONS -->
+            <article class="panel">
+
+                <h3>Recent Observations</h3>
+
+                <table>
+
+                    <thead>
+                    <tr>
+                        <th>Object</th>
+                        <th>Source</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                    <tr>
+                        <td>Earth</td>
+                        <td>NASA EPIC</td>
+                        <td class="online-text">
+                            Latest
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>NOAA 19</td>
+                        <td>SatNOGS</td>
+                        <td class="online-text">
+                            Stored
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </article>
+
+
+            <!-- GROUND STATION -->
+            <article class="panel">
+
+                <h3>Ground Station</h3>
+
+                <div class="station-row">
+                    <span>System</span>
+                    <strong>Raspberry Pi</strong>
+                </div>
+
+                <div class="station-row">
+                    <span>Remote Access</span>
+                    <strong class="online-text">
+                        SSH Ready
+                    </strong>
+                </div>
+
+                <div class="station-row">
+                    <span>External Storage</span>
+                    <strong>64 GB USB</strong>
+                </div>
+
+                <div class="station-row">
+                    <span>RTL-SDR</span>
+                    <strong class="pending-text">
+                        Not connected
+                    </strong>
+                </div>
+
+            </article>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>
